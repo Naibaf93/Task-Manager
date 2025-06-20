@@ -122,3 +122,24 @@ button:hover{
 
     padding: 8px 18px;    
 }
+
+/* Dark theme styles */
+body.dark-theme {
+    background: #333;
+    color: #fff;
+}
+
+.dark-theme button{
+    background-color: #2A7B9B;
+    background-image: linear-gradient(to top, #2A7B9B 0%, #325eab 100%);
+    color: white;
+}
+
+.dark-theme #task-manager {
+    background: #222;
+    color: #fff;
+}
+
+.dark-theme #task-list li {
+    background: #444;
+}
