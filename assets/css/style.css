@@ -1,0 +1,10 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #ecf2f6;
+    background-image: linear-gradient(to top, #2A7B9B 0%, #ecf2f6 100%);
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    min-height: 100dvh;
+    font-size: 62.5%;
+}
