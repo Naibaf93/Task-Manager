@@ -143,3 +143,43 @@ body.dark-theme {
 .dark-theme #task-list li {
     background: #444;
 }
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    body{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    #task-list li {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+    "li li"
+    "delete edit";
+
+    width: 90%;
+    height: auto;
+    padding-bottom: 10px;
+    }
+
+    #task-list li p{
+        grid-area: li;
+    }
+
+    #task-list li .delete-btn{
+        grid-area: delete;
+        width: auto;
+    }
+
+    #task-list li .edit-btn{
+        grid-area: edit;
+        width: auto;
+    }
+}
