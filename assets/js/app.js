@@ -41,6 +41,23 @@ taskForm.addEventListener("submit", (e) => {
     }    
 });
 
+//CREAR NUEVAS TAREAS
+function createTaskElement() {
+    //Selecciona un elemento padre li para crear la nueva tarea
+    const lista = document.createElement("li");
+    //Crear el elemento p (donde se agregará el texto para que no modifique el diseño de las list)
+    const parrafo = document.createElement("p");
+
+    //Agregar el texto de la tarea (recibido por input)
+    parrafo.textContent = task;
+    // Agregar el párrafo al li
+    lista.appendChild(p);
+
+    //A cada li se le crean los dos botones de modificaciones
+    lista.append(createButton("Delete", "delete-btn"), createButton("Edit", "edit-btn"));
+      return lista;
+}
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
