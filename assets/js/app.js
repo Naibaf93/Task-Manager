@@ -6,6 +6,12 @@ const taskForm = document.getElementById("task-form");
 //Seleccionar el TaskList (Elemento Padre) donde se irán agregando todas las tareas
 const taskList = document.getElementById("task-list");
 
+//Seleccionar botón switch
+const toggleButton = document.getElementById("toggle-theme-btn");
+//Seleccionar el contenedor padre del tema
+const currentTheme = localStorage.getItem("theme");
+console.log(currentTheme);
+
 //Llamado de la función que carga las tareas que ya estaban en el LOCALSTORAGE
 
 
@@ -34,3 +40,36 @@ taskForm.addEventListener("submit", (e) => {
         taskInput.value = "";
     }    
 });
+
+//CREAR NUEVAS TAREAS
+function createTaskElement() {
+    //Selecciona un elemento padre li para crear la nueva tarea
+    const lista = document.createElement("li");
+    //Crear el elemento p (donde se agregará el texto para que no modifique el diseño de las list)
+    const parrafo = document.createElement("p");
+
+    //Agregar el texto de la tarea (recibido por input)
+    parrafo.textContent = task;
+    // Agregar el párrafo al li
+    lista.appendChild(p);
+
+    //A cada li se le crean los dos botones de modificaciones
+    lista.append(createButton("Delete", "delete-btn"), createButton("Edit", "edit-btn"));
+      return lista;
+}
+
+//DARK MODE - BUTTON SWITCH EVENTO
+
+toggleButton.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+
+  //Validación del tema
+  const themeToggle = document.classList.contains("dark-theme") ? "dark" : "Light";
+
+    //Guardar en el storage
+    localStorage.setItem("theme", themeToggle);
+});
+
+if(currentTheme === "dark") {
+  document.body.classList.add("dark-theme");
+}
