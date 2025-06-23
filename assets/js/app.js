@@ -87,6 +87,34 @@ taskList.addEventListener("click", (e) =>{
     }
 })
 
+//taskItem: el parámetro seleccionado
+
+//Función para BORRAR TAREAS
+function deleteTask(taskItem){
+  // validacion con el usuario
+  if(confirm("¿Estás seguro de borrar esta tarea?")){
+    //Remueve las tareas del LOCAL STORAGE
+    removeFromLocalStorage(taskItem.firstChild.textContent);
+    //Remueve el elemento
+    taskItem.remove();
+  }
+}
+
+//Función para EDITAR TAREAS
+function editTask(taskItem) {
+   //Valida con el usuario
+  //Me trae el contenido del texto que tiene la tarea para editarla
+
+  const editedTask = prompt("Edita tu tarea:", taskItem.querySelector("p").firstChild.textContent);
+
+  if(editTask !== null){
+    //Si es diferente a null REESCRIBE EL CONTENIDO
+    taskItem.querySelector("p").firstChild.textContent = editedTask
+    //Traer el estado actual para guardarlo en LOCAL STORAGE
+    updateLocalStorage();
+  }
+}
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
