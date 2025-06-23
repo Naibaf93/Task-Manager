@@ -58,6 +58,63 @@ function createTaskElement() {
       return lista;
 }
 
+//CREAR LOS BOTONES DE CADA TAREA NUEVA
+//Parámetros el texto, y la clase
+
+function createButton(text, className) {
+   //Crea el nuevo botón 1 sola vez
+  const btn = document.createElement("button");
+  //Le agrega el texto al botón
+  btn.textContent = text
+  //Le agrega la clase al botón
+  btn.className = className;
+  
+  return btn;
+}
+
+//INTERACCIÓN CON BOTONES
+
+//Evento que viene desde el padre y él decide en qué botón ocurre el evento
+taskList.addEventListener("click", (e) =>{
+
+    //Valida si contiene la clase del botón para eliminar tareas
+    if(e.target.classList.contains("delete-btn")){
+        //LLAMADO a la función para REMOVER la tarea
+        deleteTask(e.target.parentElement);
+        //Valida si contiene la clase del botón para editar tareas
+    }else if(e.target.classList.contains("edit-btn")){
+        editTask(e.target.parentElement);
+    }
+})
+
+//taskItem: el parámetro seleccionado
+
+//Función para BORRAR TAREAS
+function deleteTask(taskItem){
+  // validacion con el usuario
+  if(confirm("¿Estás seguro de borrar esta tarea?")){
+    //Remueve las tareas del LOCAL STORAGE
+    removeFromLocalStorage(taskItem.firstChild.textContent);
+    //Remueve el elemento
+    taskItem.remove();
+  }
+}
+
+//Función para EDITAR TAREAS
+function editTask(taskItem) {
+   //Valida con el usuario
+  //Me trae el contenido del texto que tiene la tarea para editarla
+
+  const editedTask = prompt("Edita tu tarea:", taskItem.querySelector("p").firstChild.textContent);
+
+  if(editTask !== null){
+    //Si es diferente a null REESCRIBE EL CONTENIDO
+    taskItem.querySelector("p").firstChild.textContent = editedTask
+    //Traer el estado actual para guardarlo en LOCAL STORAGE
+    updateLocalStorage();
+  }
+}
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
