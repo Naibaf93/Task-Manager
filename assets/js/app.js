@@ -72,6 +72,21 @@ function createButton(text, className) {
   return btn;
 }
 
+//INTERACCIÓN CON BOTONES
+
+//Evento que viene desde el padre y él decide en qué botón ocurre el evento
+taskList.addEventListener("click", (e) =>{
+
+    //Valida si contiene la clase del botón para eliminar tareas
+    if(e.target.classList.contains("delete-btn")){
+        //LLAMADO a la función para REMOVER la tarea
+        deleteTask(e.target.parentElement);
+        //Valida si contiene la clase del botón para editar tareas
+    }else if(e.target.classList.contains("edit-btn")){
+        editTask(e.target.parentElement);
+    }
+})
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
