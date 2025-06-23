@@ -58,6 +58,20 @@ function createTaskElement() {
       return lista;
 }
 
+//CREAR LOS BOTONES DE CADA TAREA NUEVA
+//Parámetros el texto, y la clase
+
+function createButton(text, className) {
+   //Crea el nuevo botón 1 sola vez
+  const btn = document.createElement("button");
+  //Le agrega el texto al botón
+  btn.textContent = text
+  //Le agrega la clase al botón
+  btn.className = className;
+  
+  return btn;
+}
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
