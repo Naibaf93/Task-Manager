@@ -130,6 +130,15 @@ function storeTaskInLocalStorage(task) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+//INYECTAR EL LOCALSTORAGE AL DOM cuando se refresque la página
+function loadTasks(){
+  //Obtener los elementos del localStorage
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  tasks.forEach(task => {
+    taskList.appendChild(createTaskElement(task));
+  });  
+}
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
