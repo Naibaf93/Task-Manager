@@ -13,7 +13,7 @@ const currentTheme = localStorage.getItem("theme");
 console.log(currentTheme);
 
 //Llamado de la función que carga las tareas que ya estaban en el LOCALSTORAGE
-
+loadTasks();
 
 //Agregar el evento de SUBMIT
 taskForm.addEventListener("submit", (e) => {
@@ -42,7 +42,7 @@ taskForm.addEventListener("submit", (e) => {
 });
 
 //CREAR NUEVAS TAREAS
-function createTaskElement() {
+function createTaskElement(task) {
     //Selecciona un elemento padre li para crear la nueva tarea
     const lista = document.createElement("li");
     //Crear el elemento p (donde se agregará el texto para que no modifique el diseño de las list)
@@ -51,7 +51,7 @@ function createTaskElement() {
     //Agregar el texto de la tarea (recibido por input)
     parrafo.textContent = task;
     // Agregar el párrafo al li
-    lista.appendChild(p);
+    lista.appendChild(parrafo);
 
     //A cada li se le crean los dos botones de modificaciones
     lista.append(createButton("Delete", "delete-btn"), createButton("Edit", "edit-btn"));
