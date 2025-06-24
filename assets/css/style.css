@@ -135,6 +135,13 @@ body.dark-theme {
     color: white;
 }
 
+.dark-theme button:hover {
+    background-color: #325eab;
+    background-image: linear-gradient(to bottom, #76E4E4 0%, #2A7B9B 100%);
+    color: #e0f7ff;
+}
+
+
 .dark-theme #task-manager {
     background: #222;
     color: #fff;

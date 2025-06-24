@@ -13,7 +13,7 @@ const currentTheme = localStorage.getItem("theme");
 console.log(currentTheme);
 
 //Llamado de la función que carga las tareas que ya estaban en el LOCALSTORAGE
-
+loadTasks();
 
 //Agregar el evento de SUBMIT
 taskForm.addEventListener("submit", (e) => {
@@ -42,7 +42,7 @@ taskForm.addEventListener("submit", (e) => {
 });
 
 //CREAR NUEVAS TAREAS
-function createTaskElement() {
+function createTaskElement(task) {
     //Selecciona un elemento padre li para crear la nueva tarea
     const lista = document.createElement("li");
     //Crear el elemento p (donde se agregará el texto para que no modifique el diseño de las list)
@@ -51,7 +51,7 @@ function createTaskElement() {
     //Agregar el texto de la tarea (recibido por input)
     parrafo.textContent = task;
     // Agregar el párrafo al li
-    lista.appendChild(p);
+    lista.appendChild(parrafo);
 
     //A cada li se le crean los dos botones de modificaciones
     lista.append(createButton("Delete", "delete-btn"), createButton("Edit", "edit-btn"));
@@ -102,7 +102,7 @@ function deleteTask(taskItem){
 
 //Función para EDITAR TAREAS
 function editTask(taskItem) {
-   //Valida con el usuario
+  //Valida con el usuario
   //Me trae el contenido del texto que tiene la tarea para editarla
 
   const editedTask = prompt("Edita tu tarea:", taskItem.querySelector("p").firstChild.textContent);
@@ -113,6 +113,58 @@ function editTask(taskItem) {
     //Traer el estado actual para guardarlo en LOCAL STORAGE
     updateLocalStorage();
   }
+}
+
+//PERSISTENCIA: que se guarden los cambios aunque yo refresque la página
+
+//GUARDAR LAS TAREAS QUE SE VAN GENERANDO EN EL LOCAL STORAGE
+function storeTaskInLocalStorage(task) {
+    //Ir guardando las tareas
+    //JSON.parse es un método que convierte una cadena de texto en formato JSON a un objeto o array en JavaScript
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+    //Push de las tareas: push agrega un elemento a un array existente
+    tasks.push(task);
+    //Guardar como un string 
+    //JSON.stringify: convierte un objeto de Javascript a texto en formato JSON
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+//INYECTAR EL LOCALSTORAGE AL DOM cuando se refresque la página
+function loadTasks(){
+  //Obtener los elementos del localStorage
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  tasks.forEach(task => {
+    taskList.appendChild(createTaskElement(task));
+  });  
+}
+
+//FUNCIONES PARA QUE AL REFRESCAR Y ELIMINAR SE GUARDEN LOS CAMBIOS EN EL LOCAL STORAGE
+
+//Guardar EDITS de tareas
+function updateLocalStorage() {
+   //Trae todos los elementos que coincidan
+    //Convierte la lista de nodos en un array que SI puedo manipular
+
+    //SOLUCIÓN DE CONFLICTO: Siempre se incluye la función harcodeada en HTML, queremos que al editar o eliminar tareas no nos salga esta
+
+    //El filter evita que en el código ocurra el BUG donde se guardaba en el local storage la lista hardcodeada en html, al editar y borrar elementos ya no se guardará esta primera tarea
+    const tasks = Array.from(taskList.querySelectorAll("li")).filter((li) => li.querySelector("p").id !== "task-harcodeada").map((li) => li.querySelector("p").firstChild.textContent);
+    console.log(tasks);
+    
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+//Borrar tareas ELIMINADAS en el localStorage
+function removeFromLocalStorage(taskContent){
+  //Obtiene el estado actual del LOCAL STORAGE para manipular estos elementos
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+   //Nuevo ARRAY que comprueba si la tarea actual es diferente al contenido que se quiere eliminar
+  //Deja las tareas que PERSISTEN y quita a las que no
+  const updateTasks = tasks.filter((task) => task !== taskContent);
+
+  //Vuelve a convertir a JSON para que el localStorage actualice el cambio con los elementos BORRADOS
+  localStorage.setItem("tasks", JSON.stringify(updateTasks));
 }
 
 //DARK MODE - BUTTON SWITCH EVENTO
