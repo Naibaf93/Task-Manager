@@ -102,7 +102,7 @@ function deleteTask(taskItem){
 
 //Función para EDITAR TAREAS
 function editTask(taskItem) {
-   //Valida con el usuario
+  //Valida con el usuario
   //Me trae el contenido del texto que tiene la tarea para editarla
 
   const editedTask = prompt("Edita tu tarea:", taskItem.querySelector("p").firstChild.textContent);
@@ -137,6 +137,34 @@ function loadTasks(){
   tasks.forEach(task => {
     taskList.appendChild(createTaskElement(task));
   });  
+}
+
+//FUNCIONES PARA QUE AL REFRESCAR Y ELIMINAR SE GUARDEN LOS CAMBIOS EN EL LOCAL STORAGE
+
+//Guardar EDITS de tareas
+function updateLocalStorage() {
+   //Trae todos los elementos que coincidan
+    //Convierte la lista de nodos en un array que SI puedo manipular
+
+    //SOLUCIÓN DE CONFLICTO: Siempre se incluye la función harcodeada en HTML, queremos que al editar o eliminar tareas no nos salga esta
+
+    //El filter evita que en el código ocurra el BUG donde se guardaba en el local storage la lista hardcodeada en html, al editar y borrar elementos ya no se guardará esta primera tarea
+    const tasks = Array.from(taskList.querySelectorAll("li")).filter((li) => li.querySelector("p").id !== "task-harcodeada").map((li) => li.querySelector("p").firstChild.textContent);
+    console.log(tasks);
+    
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+//Borrar tareas ELIMINADAS en el localStorage
+function removeFromLocalStorage(taskContent){
+  //Obtiene el estado actual del LOCAL STORAGE para manipular estos elementos
+  const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+   //Nuevo ARRAY que comprueba si la tarea actual es diferente al contenido que se quiere eliminar
+  //Deja las tareas que PERSISTEN y quita a las que no
+  const updateTasks = tasks.filter((task) => task !== taskContent);
+
+  //Vuelve a convertir a JSON para que el localStorage actualice el cambio con los elementos BORRADOS
+  localStorage.setItem("tasks", JSON.stringify(updateTasks));
 }
 
 //DARK MODE - BUTTON SWITCH EVENTO
