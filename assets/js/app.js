@@ -115,6 +115,21 @@ function editTask(taskItem) {
   }
 }
 
+//PERSISTENCIA: que se guarden los cambios aunque yo refresque la página
+
+//GUARDAR LAS TAREAS QUE SE VAN GENERANDO EN EL LOCAL STORAGE
+function storeTaskInLocalStorage(task) {
+    //Ir guardando las tareas
+    //JSON.parse es un método que convierte una cadena de texto en formato JSON a un objeto o array en JavaScript
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+
+    //Push de las tareas: push agrega un elemento a un array existente
+    tasks.push(task);
+    //Guardar como un string 
+    //JSON.stringify: convierte un objeto de Javascript a texto en formato JSON
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 //DARK MODE - BUTTON SWITCH EVENTO
 
 toggleButton.addEventListener("click", () => {
